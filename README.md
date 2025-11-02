@@ -85,8 +85,8 @@ The master and slaves are fully synthesizable and verified using a self-checking
 ## 🧰 Tools Used
 
 * **Language:** Verilog HDL
-* **Simulator:** Icarus Verilog / ModelSim / Vivado
-* **Waveform Viewer:** GTKWave
+* **Simulator:** Icarus Verilog / ModelSim /Verilator/ Vivado
+* **Waveform Viewer:** GTKWave/ Vivado
 
 ---
 
