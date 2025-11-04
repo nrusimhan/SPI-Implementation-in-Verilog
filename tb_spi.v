@@ -1,24 +1,3 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 02.11.2025 22:39:32
-// Design Name: 
-// Module Name: tb_spi
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 `timescale 1ns/1ps
 module tb_spi;
     reg clk, rst, start;
@@ -33,7 +12,8 @@ module tb_spi;
     // individual slave MISO outputs and rx_data for verification
     wire miso0, miso1, miso2;
     wire [7:0] rx0, rx1, rx2;
-
+    wire sending; 
+    
     // tx_data for each slave (parallel inputs)
     reg [7:0] tx0, tx1, tx2;
 
@@ -43,13 +23,13 @@ module tb_spi;
         .slave_sel(slave_sel), .mosi_data(mosi_data),
         .miso(miso), .sclk(sclk), .mosi(mosi),
         .cs0(cs0), .cs1(cs1), .cs2(cs2),
-        .done(done), .miso_data(miso_data)
+        .done(done), .miso_data(miso_data), .sending(sending)
     );
 
     // Instantiate slaves with tx_data inputs
-    spi_slave slave0 (.sclk(sclk), .cs(cs0), .mosi(mosi), .tx_data(tx0), .miso(miso0), .rx_data(rx0));
-    spi_slave slave1 (.sclk(sclk), .cs(cs1), .mosi(mosi), .tx_data(tx1), .miso(miso1), .rx_data(rx1));
-    spi_slave slave2 (.sclk(sclk), .cs(cs2), .mosi(mosi), .tx_data(tx2), .miso(miso2), .rx_data(rx2));
+    spi_slave slave0 (.rst(rst), .sclk(sclk), .cs(cs0), .mosi(mosi), .tx_data(tx0), .sending(sending), .miso(miso0), .rx_data(rx0));
+    spi_slave slave1 (.rst(rst), .sclk(sclk), .cs(cs1), .mosi(mosi), .tx_data(tx1), .sending(sending), .miso(miso1), .rx_data(rx1));
+    spi_slave slave2 (.rst(rst), .sclk(sclk), .cs(cs2), .mosi(mosi), .tx_data(tx2), .sending(sending), .miso(miso2), .rx_data(rx2));
 
     // MISO bus multiplexer (tri-state like)
     assign miso = (!cs0) ? miso0 :
@@ -102,4 +82,3 @@ module tb_spi;
         #50 $finish;
     end
 endmodule
-
