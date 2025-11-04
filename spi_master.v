@@ -1,29 +1,3 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 02.11.2025 22:36:43
-// Design Name: 
-// Module Name: spi_master
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
-// Simple SPI master (same behavior as before)
-// Generates sclk by toggling while sending, drives MOSI, samples MISO,
-// controls three active-low chip selects cs0/cs1/cs2, reports done and miso_data.
-
 module spi_master (
     input  wire clk,
     input  wire rst,
@@ -35,12 +9,13 @@ module spi_master (
     output reg  mosi,
     output reg  cs0, cs1, cs2,
     output reg  done,
-    output reg  [7:0] miso_data
+    output reg  [7:0] miso_data,
+    output reg sending
 );
 
     reg [7:0] shift_reg;
     reg [2:0] bit_cnt;
-    reg sending;
+    
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -88,4 +63,3 @@ module spi_master (
         end
     end
 endmodule
-
