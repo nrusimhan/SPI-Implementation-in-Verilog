@@ -38,10 +38,6 @@ module spi_slave (
     always @(posedge sclk) begin
         if (!cs && sending) begin
             rx_data <= {rx_data[6:0], mosi}; // shift in MOSI bit
-            bit_cnt <= bit_cnt + 1;
-            if (bit_cnt == 3'd7) begin
-               done<=1; // complete byte received
-            end
         end
     end
 
@@ -56,3 +52,4 @@ module spi_slave (
     end
 
 endmodule
+
